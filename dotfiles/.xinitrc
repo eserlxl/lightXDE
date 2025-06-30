@@ -13,4 +13,4 @@ if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
   exec dbus-launch --exit-with-session startplasma-x11
 else
   exec startplasma-x11
-fi 
+fi

@@ -8,4 +8,4 @@ export PATH="$HOME/.local/bin:$PATH"
 # Start X on tty1 only, if not already inside X
 if [[ -z $DISPLAY && $(tty) == /dev/tty1 ]]; then
     exec startx
-fi 
+fi
