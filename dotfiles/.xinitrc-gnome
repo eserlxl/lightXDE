@@ -1,0 +1,10 @@
+#!/bin/bash
+# .xinitrc for lightXDE: start GNOME with dbus and session vars
+
+export DESKTOP_SESSION=gnome
+export XDG_CURRENT_DESKTOP=GNOME
+
+[[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
+[[ -f ~/.xprofile ]] && source ~/.xprofile
+
+exec gnome-session

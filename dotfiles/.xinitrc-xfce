@@ -1,0 +1,10 @@
+#!/bin/bash
+# .xinitrc for lightXDE: start XFCE with dbus and session vars
+
+export DESKTOP_SESSION=xfce
+export XDG_CURRENT_DESKTOP=XFCE
+
+[[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
+[[ -f ~/.xprofile ]] && source ~/.xprofile
+
+exec startxfce4

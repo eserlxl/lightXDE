@@ -1,18 +1,15 @@
 #!/usr/bin/env bash
 # lightXDE install script for Arch/Artix Linux
-# Installs minimal Plasma, configures auto-login, KWallet, Polkit, and PAM
+# Installs a minimal DE, configures auto-login, KWallet, Polkit, and PAM
 set -e
 
 # --- Configuration ---
-readonly PKGS=(
-  plasma-desktop xorg-server xorg-xinit udisks2 polkit gvfs
-  gvfs-mtp gvfs-gphoto2 gvfs-afc patch
-)
 readonly DM_LIST=(sddm lightdm gdm lxdm)
 readonly LOGIN_FILE="/etc/pam.d/login"
 readonly POLKIT_RULE_SRC="polkit/49-nopasswd.rules"
 readonly POLKIT_RULE_DEST="/etc/polkit-1/rules.d/49-nopasswd.rules"
-readonly PAM_PATCH_FILE="pam/login-pam-kwallet.patch"
+readonly PAM_KWALLET_PATCH_FILE="pam/login-pam-kwallet.patch"
+readonly PAM_GNOME_KEYRING_PATCH_FILE="pam/login-pam-gnome-keyring.patch"
 
 # --- Functions ---
 
@@ -33,30 +30,120 @@ check_root() {
   fi
 }
 
+# Detect the installed desktop environment
+detect_de() {
+  if pacman -Qs plasma-desktop >/dev/null; then
+    echo "plasma"
+  elif pacman -Qs gnome-shell >/dev/null; then
+    echo "gnome"
+  elif pacman -Qs xfce4-session >/dev/null; then
+    echo "xfce"
+  else
+    echo "unknown"
+  fi
+}
+
+# Prompt user to select a DE
+prompt_de_selection() {
+  log "No supported desktop environment detected."
+  PS3="Please select a desktop environment to install: "
+  options=("KDE Plasma" "GNOME" "XFCE" "Quit")
+  select opt in "${options[@]}"; do
+    case $opt in
+      "KDE Plasma")
+        echo "plasma"
+        break
+        ;;
+      "GNOME")
+        echo "gnome"
+        break
+        ;;
+      "XFCE")
+        echo "xfce"
+        break
+        ;;
+      "Quit")
+        exit 0
+        ;;
+      *)
+        log "Invalid option $REPLY"
+        ;;
+    esac
+  done
+}
+
 # Install required packages
 install_packages() {
-  log "Installing required packages..."
-  pacman -Sy --needed --noconfirm "${PKGS[@]}"
+  local de
+  de=$1
+  local pkgs=()
+  local base_pkgs=(xorg-server xorg-xinit udisks2 polkit gvfs gvfs-mtp gvfs-gphoto2 gvfs-afc patch)
+
+  case "$de" in
+    plasma)
+      pkgs=(plasma-desktop kwallet-pam)
+      ;;
+    gnome)
+      pkgs=(gnome-shell gnome-keyring)
+      ;;
+    xfce)
+      pkgs=(xfce4-session)
+      ;;
+    *)
+      log "Unsupported desktop environment: $de"
+      exit 1
+      ;;
+  esac
+
+  log "Installing required packages for $de..."
+  pacman -Sy --needed --noconfirm "${base_pkgs[@]}" "${pkgs[@]}"
 }
 
 # Copy dotfiles to the user's home directory
 copy_dotfiles() {
+  local de
+  de=$1
   local user_home
   user_home=$(eval echo ~"${SUDO_USER}")
+
   log "Copying dotfiles to $user_home..."
-  install -Dm644 "dotfiles/.xinitrc" "$user_home/.xinitrc"
   install -Dm644 "dotfiles/.bash_profile" "$user_home/.bash_profile"
-  chown "$SUDO_USER:$SUDO_USER" "$user_home/.xinitrc" "$user_home/.bash_profile"
+  chown "$SUDO_USER:$SUDO_USER" "$user_home/.bash_profile"
+
+  case "$de" in
+    plasma)
+      install -Dm644 "dotfiles/.xinitrc-plasma" "$user_home/.xinitrc"
+      ;;
+    gnome)
+      install -Dm644 "dotfiles/.xinitrc-gnome" "$user_home/.xinitrc"
+      ;;
+    xfce)
+      install -Dm644 "dotfiles/.xinitrc-xfce" "$user_home/.xinitrc"
+      ;;
+  esac
+  chown "$SUDO_USER:$SUDO_USER" "$user_home/.xinitrc"
 }
 
-# Configure PAM for KWallet auto-unlock
+# Configure PAM for KWallet/GNOME Keyring auto-unlock
 configure_pam() {
-  log "Configuring PAM for KWallet auto-unlock..."
-  if ! grep -q "pam_kwallet5.so" "$LOGIN_FILE"; then
-    log "Patching $LOGIN_FILE..."
-    patch --backup "$LOGIN_FILE" < "$PAM_PATCH_FILE"
-  else
-    log "PAM configuration for KWallet already exists. Skipping."
+  local de
+  de=$1
+
+  log "Configuring PAM for $de..."
+  if [[ "$de" == "plasma" ]]; then
+    if ! grep -q "pam_kwallet5.so" "$LOGIN_FILE"; then
+      log "Patching $LOGIN_FILE for KWallet..."
+      patch --backup "$LOGIN_FILE" < "$PAM_KWALLET_PATCH_FILE"
+    else
+      log "PAM configuration for KWallet already exists. Skipping."
+    fi
+  elif [[ "$de" == "gnome" ]]; then
+    if ! grep -q "pam_gnome_keyring.so" "$LOGIN_FILE"; then
+      log "Patching $LOGIN_FILE for GNOME Keyring..."
+      patch --backup "$LOGIN_FILE" < "$PAM_GNOME_KEYRING_PATCH_FILE"
+    else
+      log "PAM configuration for GNOME Keyring already exists. Skipping."
+    fi
   fi
 }
 
@@ -94,20 +181,29 @@ disable_display_managers() {
 
 main() {
   check_root
-  install_packages
-  copy_dotfiles
-  configure_pam
+  local de
+  de=$(detect_de)
+
+  if [[ "$de" == "unknown" ]]; then
+    de=$(prompt_de_selection)
+  else
+    log "Detected desktop environment: $de"
+  fi
+
+  install_packages "$de"
+  copy_dotfiles "$de"
+  configure_pam "$de"
   install_polkit_rule
   disable_display_managers
 
   cat <<EOF
 
 lightXDE install complete!
-- Plasma will auto-start on TTY1 for $SUDO_USER
-- KWallet auto-unlock and Polkit rules are set
+- $de will auto-start on TTY1 for $SUDO_USER
+- Auto-unlock and Polkit rules are set
 - Reboot or log out to test
 
-On next boot, after logging in, lightXDE (Plasma desktop) will start automatically on TTY1. No need to run 'startx'.
+On next boot, after logging in, your desktop environment will start automatically on TTY1. No need to run 'startx'.
 EOF
 }
 
