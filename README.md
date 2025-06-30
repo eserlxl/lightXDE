@@ -29,9 +29,9 @@ cd lightXDE
 bash install.sh
 ```
 
-- Installs: plasma-desktop, xorg, pam-kwallet, udisks2, polkit, gvfs, and more
+- Installs: plasma-desktop, xorg, udisks2, polkit, gvfs, and more
 - Copies dotfiles to your home
-- Patches PAM for KWallet auto-unlock
+- Configures PAM for KWallet auto-unlock (provided by plasma-workspace, which is installed as a dependency of plasma-desktop; no separate pam-kwallet5 package is required)
 - Configures Polkit for passwordless USB/power actions
 
 ## Optional Enhancements

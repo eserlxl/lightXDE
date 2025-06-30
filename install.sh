@@ -32,14 +32,13 @@ install -Dm644 "dotfiles/.xinitrc" "$USER_HOME/.xinitrc"
 install -Dm644 "dotfiles/.bash_profile" "$USER_HOME/.bash_profile"
 chown "$SUDO_USER:$SUDO_USER" "$USER_HOME/.xinitrc" "$USER_HOME/.bash_profile"
 
-# 3. Patch /etc/pam.d/login for pam_kwallet5
-if ! grep -q pam_kwallet5.so /etc/pam.d/login; then
-  if [ -e "/etc/pam.d/login.bak" ]; then
-    cp -f "/etc/pam.d/login" "/etc/pam.d/login.bak"
-  else
-    cp "/etc/pam.d/login" "/etc/pam.d/login.bak"
-  fi
-  patch /etc/pam.d/login "pam/login-pam-kwallet.patch"
+# 3. Inject pam_kwallet5 lines if missing
+LOGIN_FILE="/etc/pam.d/login"
+if ! grep -q pam_kwallet5.so "$LOGIN_FILE"; then
+  echo "[+] Injecting pam_kwallet5 into $LOGIN_FILE"
+  cp "$LOGIN_FILE" "$LOGIN_FILE.bak"
+  sed -i '/^auth.*pam_unix.so/a auth\toptional\tpam_kwallet5.so auto_start force_run' "$LOGIN_FILE"
+  sed -i '/^session.*pam_unix.so/a session\toptional\tpam_kwallet5.so auto_start' "$LOGIN_FILE"
 fi
 
 # 4. Install polkit rule for wheel group
