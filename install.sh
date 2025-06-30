@@ -51,13 +51,13 @@ for DM in "${DM_LIST[@]}"; do
   if systemctl list-unit-files | grep -q "${DM}.service"; then
     if systemctl is-enabled --quiet "$DM.service"; then
       systemctl disable "$DM.service"
-      systemctl stop "$DM.service"
       DISABLED_DMS+=("$DM")
     fi
   fi
 done
 if [[ ${#DISABLED_DMS[@]} -gt 0 ]]; then
   echo "Disabled display manager(s): ${DISABLED_DMS[*]}"
+  echo "Display manager(s) ${DISABLED_DMS[*]} have been disabled and will not start on next boot. Your current session will not be interrupted."
 fi
 
 # 5. Done
@@ -66,4 +66,6 @@ lightXDE install complete!
 - Plasma will auto-start on TTY1 for $SUDO_USER
 - KWallet auto-unlock and Polkit rules are set
 - Reboot or log out to test
+
+On next boot, after logging in, lightXDE (Plasma desktop) will start automatically on TTY1. No need to run 'startx'.
 EOF 

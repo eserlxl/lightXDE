@@ -18,7 +18,7 @@ A lightweight, display-manager-free KDE Plasma desktop environment for minimalis
 - No extra daemons or RAM usage
 - Faster boot (no DM startup delay)
 - Simpler troubleshooting (all config in dotfiles)
-- No graphical login: boots to TTY1, auto-starts Plasma with `startx`
+- No graphical login: boots to TTY1, and Plasma (lightXDE) auto-starts after login—no need to run `startx` manually
 
 ## Quick Install (Arch/Artix)
 ```sh
@@ -33,6 +33,7 @@ bash install.sh
 - Copies dotfiles to your home
 - Configures PAM for KWallet auto-unlock (provided by plasma-workspace, which is installed as a dependency of plasma-desktop; no separate pam-kwallet5 package is required)
 - Configures Polkit for passwordless USB/power actions
++ Plasma (lightXDE) will start automatically on TTY1 after login—no need to run 'startx'.
 
 ## Optional Enhancements
 - GPG agent integration for KWallet
@@ -60,7 +61,7 @@ lightXDE/
 ## Goals
 - Minimal, reproducible, and robust Plasma desktop
 - No display manager required
-- Full desktop experience with `startx` as default launcher
+- Full desktop experience with automatic Plasma launch on TTY1 after login (no manual 'startx' needed)
 
 ---
 See `docs/` for technical details and customization tips. 
