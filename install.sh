@@ -68,4 +68,4 @@ lightXDE install complete!
 - Reboot or log out to test
 
 On next boot, after logging in, lightXDE (Plasma desktop) will start automatically on TTY1. No need to run 'startx'.
-EOF 
+EOF
