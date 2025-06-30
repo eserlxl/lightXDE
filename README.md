@@ -1,0 +1,66 @@
+# lightXDE
+
+A lightweight, display-manager-free KDE Plasma desktop environment for minimalists, Arch/Artix users, and those who prefer `startx` over SDDM/LightDM. 
+
+## Purpose & Target Users
+- **Minimal RAM/boot time**: No display manager, no bloat, just Plasma.
+- **Auto-login & KWallet auto-unlock**: Seamless session start and secrets management.
+- **Full Polkit & PAM integration**: USB automount, power actions, and secure authentication.
+- **Systemd compatible**: Works on Arch, Artix, and derivatives.
+
+**Target users:**
+- Minimalists
+- Arch/Artix users
+- Display manager haters
+- Tinkerers who want full control
+
+## Why not SDDM/LightDM?
+- No extra daemons or RAM usage
+- Faster boot (no DM startup delay)
+- Simpler troubleshooting (all config in dotfiles)
+- No graphical login: boots to TTY1, auto-starts Plasma with `startx`
+
+## Quick Install (Arch/Artix)
+```sh
+# 1. Clone and run the installer
+cd ~
+git clone https://github.com/youruser/lightXDE.git
+cd lightXDE
+bash install.sh
+```
+
+- Installs: plasma-desktop, xorg, pam-kwallet, udisks2, polkit, gvfs, and more
+- Copies dotfiles to your home
+- Patches PAM for KWallet auto-unlock
+- Configures Polkit for passwordless USB/power actions
+
+## Optional Enhancements
+- GPG agent integration for KWallet
+- Wayland fallback (coming soon)
+
+## Project Structure
+```
+lightXDE/
+├── README.md
+├── install.sh
+├── dotfiles/
+│   ├── .xinitrc
+│   └── .bash_profile
+├── pam/
+│   └── login-pam-kwallet.patch
+├── polkit/
+│   └── 49-nopasswd.rules
+├── docs/
+│   ├── kwallet-autounlock.md
+│   ├── polkit-support.md
+│   └── startx-autologin.md
+└── LICENSE
+```
+
+## Goals
+- Minimal, reproducible, and robust Plasma desktop
+- No display manager required
+- Full desktop experience with `startx` as default launcher
+
+---
+See `docs/` for technical details and customization tips. 

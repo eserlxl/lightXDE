@@ -1,0 +1,10 @@
+// /etc/polkit-1/rules.d/49-nopasswd.rules for lightXDE
+polkit.addRule(function(action, subject) {
+  if (subject.isInGroup("wheel")) {
+    if (action.id.match(/^org\.freedesktop\.udisks2\./) ||
+        action.id.match(/^org\.freedesktop\.upower\./) ||
+        action.id.match(/^org\.freedesktop\.login1\./)) {
+      return polkit.Result.YES;
+    }
+  }
+}); 
