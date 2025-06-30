@@ -4,7 +4,7 @@
 set -e
 
 # Required packages
-PKGS=(plasma-desktop xorg-server xorg-xinit pam-kwallet5 udisks2 polkit gvfs gvfs-mtp gvfs-gphoto2 gvfs-afc)
+PKGS=(plasma-desktop xorg-server xorg-xinit udisks2 polkit gvfs gvfs-mtp gvfs-gphoto2 gvfs-afc)
 
 # Check for root
 if [[ $EUID -ne 0 ]]; then
