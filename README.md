@@ -24,7 +24,7 @@ A lightweight, display-manager-free KDE Plasma desktop environment for minimalis
 ```sh
 # 1. Clone and run the installer
 cd ~
-git clone https://github.com/youruser/lightXDE.git
+git clone https://github.com/eserlxl/lightXDE.git
 cd lightXDE
 bash install.sh
 ```
