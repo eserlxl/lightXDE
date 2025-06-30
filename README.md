@@ -22,10 +22,12 @@ A lightweight, display-manager-free KDE Plasma desktop environment for minimalis
 
 ## Quick Install (Arch/Artix)
 ```sh
-# 1. Clone and run the installer
+# 1. Clone and run the installer (as root)
 cd ~
 git clone https://github.com/eserlxl/lightXDE.git
 cd lightXDE
+sudo bash install.sh
+# or, if already root:
 bash install.sh
 ```
 
