@@ -257,6 +257,30 @@ disable_display_managers() {
   fi
 }
 
+# Check for active %wheel sudoers rule in /etc/sudoers and /etc/sudoers.d
+check_wheel_sudoers() {
+  # Search for uncommented %wheel lines in /etc/sudoers
+  if sudo grep -E '^[[:space:]]*%wheel[[:space:]]+ALL=\(ALL(:ALL)?\)[[:space:]]+ALL' /etc/sudoers | grep -vq '^[[:space:]]*#'; then
+    return 0
+  fi
+
+  # Search for uncommented %wheel lines in all /etc/sudoers.d/* files
+  if [[ -d /etc/sudoers.d ]]; then
+    for f in /etc/sudoers.d/*; do
+      [[ -f "$f" ]] || continue
+      if sudo grep -E '^[[:space:]]*%wheel[[:space:]]+ALL=\(ALL(:ALL)?\)[[:space:]]+ALL' "$f" | grep -vq '^[[:space:]]*#'; then
+        return 0
+      fi
+    done
+  fi
+
+  # If we reach here, no active %wheel rule was found
+  log "ERROR: No active '%wheel ALL=(ALL:ALL) ALL' or similar rule found in /etc/sudoers or /etc/sudoers.d/."
+  log "Users in the wheel group will NOT be able to use sudo."
+  log "To fix, run: sudo visudo and add or uncomment a '%wheel ALL=(ALL:ALL) ALL' line."
+  exit 1
+}
+
 # --- Main ---
 
 main() {
@@ -274,11 +298,8 @@ main() {
     log "Add the user to the wheel group and re-login: sudo usermod -aG wheel $real_user"
     exit 1
   fi
-  if sudo grep -E '^\s*#\s*%wheel\s+ALL=\(ALL(:ALL)?\)\s+ALL' /etc/sudoers > /dev/null; then
-    log "ERROR: The '%wheel ALL=(ALL:ALL) ALL' line in /etc/sudoers is commented out. Users in the wheel group will NOT be able to use sudo."
-    log "To fix, run: sudo visudo and uncomment the '%wheel ALL=(ALL:ALL) ALL' line."
-    exit 1
-  fi
+
+  check_wheel_sudoers
 
   # Check if user can actually run sudo non-interactively
   if ! sudo -n true 2>/dev/null; then
