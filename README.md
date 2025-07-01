@@ -39,7 +39,7 @@ sudo bash install.sh
 
 ## Optional Enhancements
 - **GPG Agent Integration**: Seamlessly integrates `gpg-agent` with KWallet for secure, passwordless GPG and SSH operations.
-- Wayland fallback (coming soon)
+
 
 ## Feature Overview and Recent Improvements
 
