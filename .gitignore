@@ -1,0 +1,19 @@
+# Logs
+*.log
+
+# Swap and backup files
+*.swp
+*.bak
+*~
+
+# macOS Finder files
+.DS_Store
+
+# ShellCheck cache
+.shellcheck*
+
+# Environment files
+.env
+
+# Temporary files
+*.tmp 
