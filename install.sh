@@ -50,8 +50,6 @@ detect_de() {
     echo "budgie"
   elif pacman -Qs i3-wm >/dev/null; then
     echo "i3"
-  elif pacman -Qs sway >/dev/null; then
-    echo "sway"
   else
     echo "unknown"
   fi
@@ -61,7 +59,7 @@ detect_de() {
 prompt_de_selection() {
   log "No supported desktop environment detected."
   PS3="Please select a desktop environment to install: "
-  options=("KDE Plasma" "GNOME" "XFCE" "LXQt" "LXDE" "MATE" "Cinnamon" "Budgie" "i3" "Sway" "Quit")
+  options=("KDE Plasma" "GNOME" "XFCE" "LXQt" "LXDE" "MATE" "Cinnamon" "Budgie" "i3" "Quit")
   select opt in "${options[@]}"; do
     case $opt in
       "KDE Plasma")
@@ -98,10 +96,6 @@ prompt_de_selection() {
         ;;
       "i3")
         echo "i3"
-        break
-        ;;
-      "Sway")
-        echo "sway"
         break
         ;;
       "Quit")
@@ -149,9 +143,6 @@ install_packages() {
     i3)
       pkgs=(i3 xterm gnome-keyring polkit-gnome)
       ;;
-    sway)
-      pkgs=(sway foot gnome-keyring polkit-gnome)
-      ;;
     *)
       log "Unsupported desktop environment: $de"
       exit 1
@@ -159,7 +150,7 @@ install_packages() {
   esac
 
   log "Installing required packages for $de..."
-  sudo pacman -Syu --needed --noconfirm "${base_pkgs[@]}" "${pkgs[@]}"
+  sudo pacman -S --needed --noconfirm "${base_pkgs[@]}" "${pkgs[@]}"
 }
 
 # Copy dotfiles to the user's home directory
