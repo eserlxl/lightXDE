@@ -123,34 +123,34 @@ install_packages() {
 
   case "$de" in
     plasma)
-      pkgs=(plasma-desktop konsole dolphin kwallet-pam)
+      pkgs=(plasma-desktop konsole dolphin kwallet-pam polkit-kde-agent)
       ;;
     gnome)
-      pkgs=(gnome gnome-terminal gnome-keyring)
+      pkgs=(gnome gnome-terminal gnome-keyring polkit-gnome)
       ;;
     xfce)
-      pkgs=(xfce4 xfce4-session xfce4-terminal gnome-keyring)
+      pkgs=(xfce4 xfce4-session xfce4-terminal gnome-keyring polkit-gnome)
       ;;
     lxqt)
-      pkgs=(lxqt xdg-utils lxterminal gnome-keyring)
+      pkgs=(lxqt xdg-utils lxterminal gnome-keyring lxqt-policykit)
       ;;
     lxde)
-      pkgs=(lxde gnome-keyring)
+      pkgs=(lxde gnome-keyring polkit-gnome)
       ;;
     mate)
-      pkgs=(mate mate-terminal gnome-keyring)
+      pkgs=(mate mate-terminal gnome-keyring polkit-gnome)
       ;;
     cinnamon)
-      pkgs=(cinnamon gnome-terminal gnome-keyring)
+      pkgs=(cinnamon gnome-terminal gnome-keyring polkit-gnome)
       ;;
     budgie)
-      pkgs=(budgie-desktop gnome-terminal gnome-keyring)
+      pkgs=(budgie-desktop gnome-terminal gnome-keyring polkit-gnome)
       ;;
     i3)
-      pkgs=(i3 xterm gnome-keyring)
+      pkgs=(i3 xterm gnome-keyring polkit-gnome)
       ;;
     sway)
-      pkgs=(sway foot gnome-keyring)
+      pkgs=(sway foot gnome-keyring polkit-gnome)
       ;;
     *)
       log "Unsupported desktop environment: $de"

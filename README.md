@@ -31,7 +31,10 @@ sudo bash install.sh
 
 - **Detects your installed DE** (Plasma, GNOME, XFCE, LXQt, LXDE, MATE, Cinnamon, Budgie, i3, or Sway).
 - If no DE is found, it **prompts you to choose one** to install.
-- Installs the minimal required packages for your chosen DE (including polkit agent: polkit-gnome for most, polkit-kde-agent for Plasma, lxqt-policykit for LXQt).
+- Installs the minimal required packages for your chosen DE, including the correct polkit agent:
+  - polkit-kde-agent for KDE Plasma
+  - lxqt-policykit for LXQt
+  - polkit-gnome for all other supported DEs.
 - Copies dotfiles to your home, including the correct `.xinitrc-<de>` for your DE.
 - Configures PAM for KWallet (Plasma) or GNOME Keyring (GNOME) auto-unlock.
 - Configures Polkit for passwordless USB/power actions.
@@ -44,7 +47,7 @@ lightXDE has recently expanded to support many desktop environments and improved
 ### Multi-Desktop Environment Support
 - **Automatic Detection:** The installer detects if KDE Plasma, GNOME, XFCE, LXQt, LXDE, MATE, Cinnamon, Budgie, i3, or Sway is already installed.
 - **User Choice:** If no supported DE is found, the installer prompts you to select and install one (KDE Plasma, GNOME, XFCE, LXQt, LXDE, MATE, Cinnamon, Budgie, i3, or Sway).
-- **Minimal Install:** Only the essential packages for your chosen DE are installed, including the correct polkit agent (polkit-gnome for most, polkit-kde-agent for Plasma, lxqt-policykit for LXQt), keeping the system lightweight.
+- **Minimal Install:** Only the essential packages for your chosen DE are installed, including the correct polkit agent (polkit-kde-agent for Plasma, lxqt-policykit for LXQt, polkit-gnome for all others), keeping the system lightweight.
 - **Dotfiles:** The correct `.xinitrc-<de>` and `.bash_profile` are copied for your DE, ensuring seamless auto-login and session start.
 
 ### Display Manager Independence
