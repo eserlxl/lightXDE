@@ -28,6 +28,7 @@ check_root() {
     log "SUDO_USER not detected. Please run using sudo from your normal user account."
     exit 1
   fi
+  
 }
 
 # Detect the installed desktop environment
@@ -129,28 +130,28 @@ install_packages() {
       pkgs=(gnome gnome-terminal gnome-keyring)
       ;;
     xfce)
-      pkgs=(xfce4 xfce4-session xfce4-terminal)
+      pkgs=(xfce4 xfce4-session xfce4-terminal gnome-keyring)
       ;;
     lxqt)
-      pkgs=(lxqt xdg-utils lxterminal)
+      pkgs=(lxqt xdg-utils lxterminal gnome-keyring)
       ;;
     lxde)
-      pkgs=(lxde)
+      pkgs=(lxde gnome-keyring)
       ;;
     mate)
-      pkgs=(mate mate-terminal)
+      pkgs=(mate mate-terminal gnome-keyring)
       ;;
     cinnamon)
-      pkgs=(cinnamon gnome-terminal)
+      pkgs=(cinnamon gnome-terminal gnome-keyring)
       ;;
     budgie)
-      pkgs=(budgie-desktop gnome-terminal)
+      pkgs=(budgie-desktop gnome-terminal gnome-keyring)
       ;;
     i3)
-      pkgs=(i3 xterm)
+      pkgs=(i3 xterm gnome-keyring)
       ;;
     sway)
-      pkgs=(sway foot)
+      pkgs=(sway foot gnome-keyring)
       ;;
     *)
       log "Unsupported desktop environment: $de"
@@ -159,7 +160,7 @@ install_packages() {
   esac
 
   log "Installing required packages for $de..."
-  pacman -Sy --needed --noconfirm "${base_pkgs[@]}" "${pkgs[@]}"
+  echo "$SUDO_PASSWORD" | sudo -S pacman -Sy --needed --noconfirm "${base_pkgs[@]}" "${pkgs[@]}"
 }
 
 # Copy dotfiles to the user's home directory
@@ -198,15 +199,15 @@ configure_pam() {
   log "Configuring PAM for $de..."
   if [[ "$de" == "plasma" ]]; then
     if ! grep -q "pam_kwallet5.so" "$LOGIN_FILE"; then
-      log "Patching $LOGIN_FILE for KWallet..."
-      patch --backup "$LOGIN_FILE" < "$PAM_KWALLET_PATCH_FILE"
+      log "Applying KWallet PAM configuration to $LOGIN_FILE..."
+      cat "$PAM_KWALLET_PATCH_FILE" | sudo tee "$LOGIN_FILE" > /dev/null
     else
       log "PAM configuration for KWallet already exists. Skipping."
     fi
   elif [[ "$de" == "gnome" ]]; then
     if ! grep -q "pam_gnome_keyring.so" "$LOGIN_FILE"; then
-      log "Patching $LOGIN_FILE for GNOME Keyring..."
-      patch --backup "$LOGIN_FILE" < "$PAM_GNOME_KEYRING_PATCH_FILE"
+      log "Applying GNOME Keyring PAM configuration to $LOGIN_FILE..."
+      cat "$PAM_GNOME_KEYRING_PATCH_FILE" | sudo tee "$LOGIN_FILE" > /dev/null
     else
       log "PAM configuration for GNOME Keyring already exists. Skipping."
     fi
