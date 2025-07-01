@@ -70,5 +70,38 @@ lightXDE/
 - No display manager required
 - Full desktop experience with automatic DE launch on TTY1 after login (no manual 'startx' needed)
 
+## Feature Overview and Recent Improvements
+
+lightXDE has recently expanded to support multiple desktop environments and improved its installation workflow:
+
+### Multi-Desktop Environment Support
+- **Automatic Detection:** The installer detects if KDE Plasma, GNOME, or XFCE is already installed.
+- **User Choice:** If no supported DE is found, the installer prompts you to select and install one (KDE Plasma, GNOME, or XFCE).
+- **Minimal Install:** Only the essential packages for your chosen DE are installed, keeping the system lightweight.
+- **Dotfiles:** The correct `.xinitrc` and `.bash_profile` are copied for your DE, ensuring seamless auto-login and session start.
+
+### Display Manager Independence
+- **No Display Manager Needed:** The script disables any installed display managers (SDDM, LightDM, GDM, LXDM) to ensure a pure TTY+startx workflow.
+- **Auto-Start on TTY1:** After login on TTY1, your desktop environment starts automatically—no need to run `startx` manually.
+
+### System Integration
+- **Polkit & PAM:** The installer configures Polkit rules for passwordless actions (for `wheel` group) and patches PAM for KWallet (Plasma) or GNOME Keyring (GNOME) auto-unlock.
+- **Documentation:** See the `docs/` directory for technical details on KWallet auto-unlock, Polkit integration, and autologin setup.
+
+### Summary Table
+
+| Feature                        | Status/Implementation                                      |
+|--------------------------------|-----------------------------------------------------------|
+| KDE Plasma support             | Yes (auto-detect/install, KWallet, polkit, dotfiles)      |
+| GNOME support                  | Yes (auto-detect/install, GNOME Keyring, polkit, dotfiles)|
+| XFCE support                   | Yes (auto-detect/install, polkit, dotfiles)               |
+| No DE installed                | Prompts user, installs selected DE                        |
+| Display manager free           | Yes (disables SDDM, LightDM, GDM, LXDM)                   |
+| Auto-login/startx on TTY1      | Yes (via `.bash_profile` and `.xinitrc-*`)                |
+| Polkit integration             | Yes (secure rules for wheel group)                        |
+| PAM integration                | Yes (patches for KWallet/GNOME Keyring)                   |
+| Documentation                  | Yes (`README.md`, `docs/`)                                |
+| License                        | GPLv3                                                     |
+
 ---
 See `docs/` for technical details and customization tips.
