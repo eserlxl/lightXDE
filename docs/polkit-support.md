@@ -18,9 +18,9 @@ In systems with no display manager (like SDDM or GDM), some polkit agents and pr
 
 ---
 
-## 🔒 The Default Polkit Rule (Secure)
+## 🔒 The Default Polkit Rule (Hybrid: Secure & Usable)
 
-By default, `lightXDE` installs a scoped rule at:
+By default, `lightXDE` now installs a hybrid rule at:
 
 ```
 /etc/polkit-1/rules.d/49-nopasswd.rules
@@ -29,12 +29,27 @@ By default, `lightXDE` installs a scoped rule at:
 **Content:**
 
 ```js
+// Allow local, active wheel users on seat0 to shutdown/reboot/suspend without password
+// Require admin authentication for UDisks2 and UPower actions
 polkit.addRule(function(action, subject) {
-  if (subject.isInGroup("wheel")) {
+  if (
+    subject.isInGroup("wheel") &&
+    subject.local &&
+    subject.active &&
+    subject.seat === "seat0"
+  ) {
+    // Allow shutdown, reboot, suspend without password
+    if (
+      action.id === "org.freedesktop.login1.power-off" ||
+      action.id === "org.freedesktop.login1.reboot" ||
+      action.id === "org.freedesktop.login1.suspend"
+    ) {
+      return polkit.Result.YES;
+    }
+    // Require admin authentication for UDisks2 and UPower actions
     if (
       action.id.match(/^org\.freedesktop\.udisks2\./) ||
-      action.id.match(/^org\.freedesktop\.upower\./) ||
-      action.id.match(/^org\.freedesktop\.login1\./)
+      action.id.match(/^org\.freedesktop\.upower\./)
     ) {
       return polkit.Result.AUTH_ADMIN_KEEP;
     }
@@ -44,17 +59,17 @@ polkit.addRule(function(action, subject) {
 
 ### ✅ What this allows:
 
-* Mounting removable drives (udisks2)
-* Reboot, suspend, logout (login1)
-* Battery and brightness control (upower)
+* **Shutdown, reboot, suspend** from the GUI for local, active users in the `wheel` group (no password required)
+* **Mounting removable drives** (udisks2) and **power management** (upower) with admin authentication (password required, but session is remembered)
 
 ### ❌ What it doesn't allow:
 
 * Arbitrary admin-level system changes
 * Package installations via polkit
 * Actions from unknown services
+* Remote or inactive users to shutdown/reboot/suspend
 
-This ensures your system remains secure even if `wheel` users run untrusted GUI apps.
+This hybrid rule balances usability and security: trusted local users can power off or reboot without a password, but other privileged actions still require authentication.
 
 > **Note:** The correct polkit agent is installed automatically for your desktop environment:
 > - KDE Plasma: polkit-kde-agent
