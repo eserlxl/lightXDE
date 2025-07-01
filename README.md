@@ -56,9 +56,9 @@ lightXDE has recently expanded to support many desktop environments and improved
 - **GPG Agent Integration**: Seamlessly integrates `gpg-agent` with KWallet (for Plasma) or GNOME Keyring (for other DEs) for secure, passwordless GPG and SSH operations.
 - **Documentation:** See the `docs/` directory for technical details on KWallet auto-unlock, Polkit integration, and autologin setup.
 
-### Summary Table
+### Feature Overview
 
-| Feature                        | Status/Implementation                                      |
+| Feature                        | Status                                      |
 |--------------------------------|-----------------------------------------------------------|
 | KDE Plasma support             | auto-detect/install, KWallet, polkit-kde-agent, dotfiles      |
 | GNOME support                  | auto-detect/install, GNOME Keyring, polkit-gnome, dotfiles    |
