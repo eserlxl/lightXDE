@@ -261,12 +261,23 @@ disable_display_managers() {
 
 main() {
   # --- Wheel group and sudoers check ---
-  if ! id -nG "$USER" | grep -qw wheel; then
-    log "WARNING: Your user ($USER) is not in the 'wheel' group. Sudo and polkit rules may not work as expected."
+  local real_user
+  real_user="${SUDO_USER:-$USER}"
+
+  if [[ $EUID -eq 0 ]]; then
+    log "Do not run this script as root or with sudo. Please run as a regular user."
+    exit 1
+  fi
+
+  if ! id -nG "$real_user" | grep -qw wheel; then
+    log "ERROR: User '$real_user' is not in the 'wheel' group. Sudo and polkit rules will not work."
+    log "Add the user to the wheel group and re-login: sudo usermod -aG wheel $real_user"
+    exit 1
   fi
   if sudo grep -E '^\s*#\s*%wheel\s+ALL=\(ALL(:ALL)?\)\s+ALL' /etc/sudoers > /dev/null; then
-    log "WARNING: The '%wheel ALL=(ALL:ALL) ALL' line in /etc/sudoers is commented out. Users in the wheel group will NOT be able to use sudo."
+    log "ERROR: The '%wheel ALL=(ALL:ALL) ALL' line in /etc/sudoers is commented out. Users in the wheel group will NOT be able to use sudo."
     log "To fix, run: sudo visudo and uncomment the '%wheel ALL=(ALL:ALL) ALL' line."
+    exit 1
   fi
 
   check_root
