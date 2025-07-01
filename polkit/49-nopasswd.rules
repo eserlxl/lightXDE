@@ -4,7 +4,7 @@ polkit.addRule(function(action, subject) {
     if (action.id.match(/^org\.freedesktop\.udisks2\./) ||
         action.id.match(/^org\.freedesktop\.upower\./) ||
         action.id.match(/^org\.freedesktop\.login1\./)) {
-      return polkit.Result.YES;
+      return polkit.Result.AUTH_ADMIN_KEEP;
     }
   }
 }); 
