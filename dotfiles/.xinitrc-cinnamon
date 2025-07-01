@@ -1,0 +1,10 @@
+#!/bin/bash
+# .xinitrc for lightXDE: start Cinnamon with dbus and session vars
+
+export DESKTOP_SESSION=cinnamon
+export XDG_CURRENT_DESKTOP=X-Cinnamon
+
+[[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
+[[ -f ~/.xprofile ]] && source ~/.xprofile
+
+exec cinnamon-session 

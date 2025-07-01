@@ -1,0 +1,10 @@
+#!/bin/bash
+# .xinitrc for lightXDE: start Budgie with dbus and session vars
+
+export DESKTOP_SESSION=budgie
+export XDG_CURRENT_DESKTOP=Budgie:GNOME
+
+[[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
+[[ -f ~/.xprofile ]] && source ~/.xprofile
+
+exec budgie-desktop 

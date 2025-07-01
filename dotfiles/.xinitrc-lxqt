@@ -1,0 +1,11 @@
+#!/bin/bash
+# .xinitrc for lightXDE: start LXQt with dbus and session vars
+
+export DESKTOP_SESSION=lxqt
+export XDG_CURRENT_DESKTOP=LXQt
+
+[[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
+[[ -f ~/.xprofile ]] && source ~/.xprofile
+
+# LXQt: for polkit authentication, install lxqt-policykit
+exec lxqt-session 

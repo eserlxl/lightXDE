@@ -1,0 +1,10 @@
+#!/bin/bash
+# .xinitrc for lightXDE: start LXDE with dbus and session vars
+
+export DESKTOP_SESSION=lxde
+export XDG_CURRENT_DESKTOP=LXDE
+
+[[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
+[[ -f ~/.xprofile ]] && source ~/.xprofile
+
+exec startlxde 

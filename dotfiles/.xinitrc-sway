@@ -1,0 +1,10 @@
+#!/bin/bash
+# .xinitrc for lightXDE: start Sway (Wayland) with session vars
+
+export DESKTOP_SESSION=sway
+export XDG_CURRENT_DESKTOP=sway
+
+[[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
+[[ -f ~/.xprofile ]] && source ~/.xprofile
+
+exec sway 

@@ -1,0 +1,10 @@
+#!/bin/bash
+# .xinitrc for lightXDE: start MATE with dbus and session vars
+
+export DESKTOP_SESSION=mate
+export XDG_CURRENT_DESKTOP=MATE
+
+[[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
+[[ -f ~/.xprofile ]] && source ~/.xprofile
+
+exec mate-session 

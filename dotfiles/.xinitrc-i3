@@ -1,0 +1,10 @@
+#!/bin/bash
+# .xinitrc for lightXDE: start i3 with dbus and session vars
+
+export DESKTOP_SESSION=i3
+export XDG_CURRENT_DESKTOP=i3
+
+[[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
+[[ -f ~/.xprofile ]] && source ~/.xprofile
+
+exec i3 

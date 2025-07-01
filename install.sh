@@ -38,6 +38,20 @@ detect_de() {
     echo "gnome"
   elif pacman -Qs xfce4-session >/dev/null; then
     echo "xfce"
+  elif pacman -Qs lxqt-session >/dev/null; then
+    echo "lxqt"
+  elif pacman -Qs lxde-session >/dev/null; then
+    echo "lxde"
+  elif pacman -Qs mate-session-manager >/dev/null; then
+    echo "mate"
+  elif pacman -Qs cinnamon >/dev/null; then
+    echo "cinnamon"
+  elif pacman -Qs budgie-desktop >/dev/null; then
+    echo "budgie"
+  elif pacman -Qs i3-wm >/dev/null; then
+    echo "i3"
+  elif pacman -Qs sway >/dev/null; then
+    echo "sway"
   else
     echo "unknown"
   fi
@@ -47,7 +61,7 @@ detect_de() {
 prompt_de_selection() {
   log "No supported desktop environment detected."
   PS3="Please select a desktop environment to install: "
-  options=("KDE Plasma" "GNOME" "XFCE" "Quit")
+  options=("KDE Plasma" "GNOME" "XFCE" "LXQt" "LXDE" "MATE" "Cinnamon" "Budgie" "i3" "Sway" "Quit")
   select opt in "${options[@]}"; do
     case $opt in
       "KDE Plasma")
@@ -60,6 +74,34 @@ prompt_de_selection() {
         ;;
       "XFCE")
         echo "xfce"
+        break
+        ;;
+      "LXQt")
+        echo "lxqt"
+        break
+        ;;
+      "LXDE")
+        echo "lxde"
+        break
+        ;;
+      "MATE")
+        echo "mate"
+        break
+        ;;
+      "Cinnamon")
+        echo "cinnamon"
+        break
+        ;;
+      "Budgie")
+        echo "budgie"
+        break
+        ;;
+      "i3")
+        echo "i3"
+        break
+        ;;
+      "Sway")
+        echo "sway"
         break
         ;;
       "Quit")
@@ -89,6 +131,27 @@ install_packages() {
     xfce)
       pkgs=(xfce4 xfce4-session xfce4-terminal)
       ;;
+    lxqt)
+      pkgs=(lxqt xdg-utils lxterminal)
+      ;;
+    lxde)
+      pkgs=(lxde)
+      ;;
+    mate)
+      pkgs=(mate mate-terminal)
+      ;;
+    cinnamon)
+      pkgs=(cinnamon gnome-terminal)
+      ;;
+    budgie)
+      pkgs=(budgie-desktop gnome-terminal)
+      ;;
+    i3)
+      pkgs=(i3 xterm)
+      ;;
+    sway)
+      pkgs=(sway foot)
+      ;;
     *)
       log "Unsupported desktop environment: $de"
       exit 1
@@ -110,18 +173,13 @@ copy_dotfiles() {
   install -Dm644 "dotfiles/.bash_profile" "$user_home/.bash_profile"
   chown "$SUDO_USER:$SUDO_USER" "$user_home/.bash_profile"
 
-  case "$de" in
-    plasma)
-      install -Dm644 "dotfiles/.xinitrc-plasma" "$user_home/.xinitrc"
-      ;;
-    gnome)
-      install -Dm644 "dotfiles/.xinitrc-gnome" "$user_home/.xinitrc"
-      ;;
-    xfce)
-      install -Dm644 "dotfiles/.xinitrc-xfce" "$user_home/.xinitrc"
-      ;;
-  esac
-  chown "$SUDO_USER:$SUDO_USER" "$user_home/.xinitrc"
+  local xinitrc_template="dotfiles/.xinitrc-$de"
+  if [[ -f "$xinitrc_template" ]]; then
+    install -Dm644 "$xinitrc_template" "$user_home/.xinitrc"
+    chown "$SUDO_USER:$SUDO_USER" "$user_home/.xinitrc"
+  else
+    log "No .xinitrc template for $de. Please create $xinitrc_template for proper session startup."
+  fi
 }
 
 # Configure PAM for KWallet/GNOME Keyring auto-unlock
