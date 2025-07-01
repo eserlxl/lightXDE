@@ -37,7 +37,7 @@ sudo bash install.sh
 - Configures Polkit for passwordless USB/power actions.
 - Your DE will start automatically on TTY1 after login—no need to run 'startx'.
 
-## Feature Overview and Recent Improvements
+## Features
 
 lightXDE has recently expanded to support many desktop environments and improved its installation workflow:
 
