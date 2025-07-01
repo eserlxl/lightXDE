@@ -81,13 +81,13 @@ install_packages() {
 
   case "$de" in
     plasma)
-      pkgs=(plasma-desktop kwallet-pam)
+      pkgs=(plasma-desktop konsole dolphin kwallet-pam)
       ;;
     gnome)
-      pkgs=(gnome-shell gnome-keyring)
+      pkgs=(gnome gnome-terminal gnome-keyring)
       ;;
     xfce)
-      pkgs=(xfce4-session)
+      pkgs=(xfce4 xfce4-session xfce4-terminal)
       ;;
     *)
       log "Unsupported desktop environment: $de"
