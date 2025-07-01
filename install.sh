@@ -287,6 +287,13 @@ main() {
     exit 1
   fi
 
+  # Request sudo credentials upfront
+  log "Requesting sudo credentials upfront (sudo -v)..."
+  if ! sudo -v; then
+    log "ERROR: Failed to authenticate with sudo. Exiting."
+    exit 1
+  fi
+
   check_root
 
   local de
