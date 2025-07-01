@@ -1,16 +1,16 @@
 # lightXDE
 
-A lightweight, display-manager-free desktop environment for minimalists, Arch/Artix users, and those who prefer `startx` over SDDM/LightDM.
+A lightweight, display-manager-free desktop environment for minimalists, Arch Linux users, and those who prefer `startx` over SDDM/LightDM.
 
 ## Purpose & Target Users
 - **Minimal RAM/boot time**: No display manager, no bloat, just your DE.
 - **Auto-login & Keyring auto-unlock**: Seamless session start and secrets management for KDE Plasma, GNOME, and XFCE.
 - **Full Polkit & PAM integration**: USB automount, power actions, and secure authentication.
-- **Systemd compatible**: Works on Arch, Artix, and derivatives.
+- **Systemd compatible**: Works on Arch Linux and derivatives.
 
 **Target users:**
 - Minimalists
-- Arch/Artix users
+- Arch Linux users
 - Display manager haters
 - Tinkerers who want full control
 
@@ -20,7 +20,7 @@ A lightweight, display-manager-free desktop environment for minimalists, Arch/Ar
 - Simpler troubleshooting (all config in dotfiles)
 - No graphical login: boots to TTY1, and your DE auto-starts after login—no need to run `startx` manually
 
-## Quick Install (Arch/Artix)
+## Quick Install (Arch Linux)
 ```sh
 # 1. Clone and run the installer (as root)
 cd ~

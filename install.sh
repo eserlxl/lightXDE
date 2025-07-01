@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# lightXDE install script for Arch/Artix Linux
+# lightXDE install script for Arch Linux
 # Installs a minimal DE, configures auto-login, KWallet, Polkit, and PAM
 set -e
 
