@@ -280,6 +280,13 @@ main() {
     exit 1
   fi
 
+  # Check if user can actually run sudo non-interactively
+  if ! sudo -n true 2>/dev/null; then
+    log "ERROR: User '$real_user' cannot run sudo without a password or is not in the sudoers file."
+    log "Please ensure your user is in the wheel group and the sudoers file is configured."
+    exit 1
+  fi
+
   check_root
 
   local de
