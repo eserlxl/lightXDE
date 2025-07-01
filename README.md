@@ -41,40 +41,6 @@ sudo bash install.sh
 - GPG agent integration for KWallet
 - Wayland fallback (coming soon)
 
-## Project Structure
-```
-lightXDE/
-├── README.md
-├── install.sh
-├── dotfiles/
-│   ├── .xinitrc-plasma
-│   ├── .xinitrc-gnome
-│   ├── .xinitrc-xfce
-│   ├── .xinitrc-lxqt
-│   ├── .xinitrc-lxde
-│   ├── .xinitrc-mate
-│   ├── .xinitrc-cinnamon
-│   ├── .xinitrc-budgie
-│   ├── .xinitrc-i3
-│   ├── .xinitrc-sway
-│   └── .bash_profile
-├── pam/
-│   ├── login-pam-kwallet.patch
-│   └── login-pam-gnome-keyring.patch
-├── polkit/
-│   └── 49-nopasswd.rules
-├── docs/
-│   ├── kwallet-autounlock.md
-│   ├── polkit-support.md
-│   └── startx-autologin.md
-└── LICENSE
-```
-
-## Goals
-- Minimal, reproducible, and robust desktop environment
-- No display manager required
-- Full desktop experience with automatic DE launch on TTY1 after login (no manual 'startx' needed)
-
 ## Feature Overview and Recent Improvements
 
 lightXDE has recently expanded to support many desktop environments and improved its installation workflow:
@@ -116,3 +82,32 @@ lightXDE has recently expanded to support many desktop environments and improved
 
 ---
 See `docs/` for technical details and customization tips.
+
+## Project Structure
+```
+lightXDE/
+├── README.md
+├── install.sh
+├── dotfiles/
+│   ├── .xinitrc-plasma
+│   ├── .xinitrc-gnome
+│   ├── .xinitrc-xfce
+│   ├── .xinitrc-lxqt
+│   ├── .xinitrc-lxde
+│   ├── .xinitrc-mate
+│   ├── .xinitrc-cinnamon
+│   ├── .xinitrc-budgie
+│   ├── .xinitrc-i3
+│   ├── .xinitrc-sway
+│   └── .bash_profile
+├── pam/
+│   ├── login-pam-kwallet.patch
+│   └── login-pam-gnome-keyring.patch
+├── polkit/
+│   └── 49-nopasswd.rules
+├── docs/
+│   ├── kwallet-autounlock.md
+│   ├── polkit-support.md
+│   └── startx-autologin.md
+└── LICENSE
+```
