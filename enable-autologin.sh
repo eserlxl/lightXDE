@@ -30,6 +30,12 @@ fi
 
 USER="$1"
 
+# Validate that the user exists
+if ! id "$USER" >/dev/null 2>&1; then
+  echo "User '$USER' does not exist."
+  exit 1
+fi
+
 mkdir -p "$OVERRIDE_DIR"
 echo "[Service]
 ExecStart=
