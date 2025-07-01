@@ -261,6 +261,16 @@ disable_display_managers() {
 
 main() {
   check_root
+
+  # --- Wheel group and sudoers check ---
+  if ! id -nG "$USER" | grep -qw wheel; then
+    log "WARNING: Your user ($USER) is not in the 'wheel' group. Sudo and polkit rules may not work as expected."
+  fi
+  if sudo grep -E '^#?%wheel\s+ALL=\(ALL(:ALL)?\)\s+ALL' /etc/sudoers | grep -q '^#'; then
+    log "WARNING: The '%wheel ALL=(ALL:ALL) ALL' line in /etc/sudoers is commented out. Users in the wheel group will NOT be able to use sudo."
+    log "To fix, run: sudo visudo and uncomment the '%wheel ALL=(ALL:ALL) ALL' line."
+  fi
+
   local de
   de=$(detect_de)
 
