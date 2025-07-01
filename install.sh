@@ -196,7 +196,8 @@ configure_pam() {
   de=$1
 
   log "Configuring PAM for $de..."
-  local backup_file="${LOGIN_FILE}.lightxde.bak.$(date +%s)"
+  local backup_file
+  backup_file="${LOGIN_FILE}.lightxde.bak.$(date +%s)"
   if [[ "$de" == "plasma" ]]; then
     if ! grep -q "pam_kwallet5.so" "$LOGIN_FILE"; then
       log "Backing up $LOGIN_FILE to $backup_file"
