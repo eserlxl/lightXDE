@@ -196,17 +196,34 @@ configure_pam() {
   de=$1
 
   log "Configuring PAM for $de..."
+  local backup_file="${LOGIN_FILE}.lightxde.bak.$(date +%s)"
   if [[ "$de" == "plasma" ]]; then
     if ! grep -q "pam_kwallet5.so" "$LOGIN_FILE"; then
-      log "Applying KWallet PAM configuration to $LOGIN_FILE..."
-      cat "$PAM_KWALLET_PATCH_FILE" | sudo tee "$LOGIN_FILE" > /dev/null
+      log "Backing up $LOGIN_FILE to $backup_file"
+      sudo cp "$LOGIN_FILE" "$backup_file"
+      log "Patching $LOGIN_FILE for KWallet..."
+      if sudo patch "$LOGIN_FILE" "$PAM_KWALLET_PATCH_FILE"; then
+        log "PAM patched successfully."
+      else
+        log "Patching failed! Restoring original $LOGIN_FILE."
+        sudo cp "$backup_file" "$LOGIN_FILE"
+        exit 1
+      fi
     else
       log "PAM configuration for KWallet already exists. Skipping."
     fi
   elif [[ "$de" == "gnome" ]]; then
     if ! grep -q "pam_gnome_keyring.so" "$LOGIN_FILE"; then
-      log "Applying GNOME Keyring PAM configuration to $LOGIN_FILE..."
-      cat "$PAM_GNOME_KEYRING_PATCH_FILE" | sudo tee "$LOGIN_FILE" > /dev/null
+      log "Backing up $LOGIN_FILE to $backup_file"
+      sudo cp "$LOGIN_FILE" "$backup_file"
+      log "Patching $LOGIN_FILE for GNOME Keyring..."
+      if sudo patch "$LOGIN_FILE" "$PAM_GNOME_KEYRING_PATCH_FILE"; then
+        log "PAM patched successfully."
+      else
+        log "Patching failed! Restoring original $LOGIN_FILE."
+        sudo cp "$backup_file" "$LOGIN_FILE"
+        exit 1
+      fi
     else
       log "PAM configuration for GNOME Keyring already exists. Skipping."
     fi
