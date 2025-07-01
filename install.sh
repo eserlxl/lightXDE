@@ -173,6 +173,11 @@ copy_dotfiles() {
   install -Dm644 "dotfiles/.bash_profile" "$user_home/.bash_profile"
   chown "$SUDO_USER:$SUDO_USER" "$user_home/.bash_profile"
 
+  if [[ "$de" == "plasma" ]]; then
+    install -Dm744 "dotfiles/.gpg-agent-kwallet" "$user_home/.gpg-agent-kwallet"
+    chown "$SUDO_USER:$SUDO_USER" "$user_home/.gpg-agent-kwallet"
+  fi
+
   local xinitrc_template="dotfiles/.xinitrc-$de"
   if [[ -f "$xinitrc_template" ]]; then
     install -Dm644 "$xinitrc_template" "$user_home/.xinitrc"

@@ -1,0 +1,14 @@
+#!/bin/bash
+#
+# GPG agent integration for KWallet
+#
+# This script is sourced from .xinitrc-plasma to start the GPG agent
+# and configure it to use KWallet for password caching.
+
+# Start the GPG agent
+gpg-connect-agent /bye
+
+# Configure the GPG agent to use KWallet
+export GPG_TTY=$(tty)
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+gpg-connect-agent updatestartuptty /bye >/dev/null

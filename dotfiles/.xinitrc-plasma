@@ -1,6 +1,11 @@
 #!/bin/bash
 # .xinitrc for lightXDE: start KDE Plasma with dbus, session vars, and polkit agent
 
+# Source GPG agent integration for KWallet
+if [[ -f ~/.gpg-agent-kwallet ]]; then
+  source ~/.gpg-agent-kwallet
+fi
+
 export DESKTOP_SESSION=plasma
 export XDG_CURRENT_DESKTOP=KDE
 
