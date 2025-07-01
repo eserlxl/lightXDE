@@ -20,15 +20,14 @@ log() {
 
 # Check for root privileges
 check_root() {
-  if [[ $EUID -ne 0 ]]; then
-    log "Please run as root (sudo $0)"
+  if [[ $EUID -eq 0 ]]; then
+    log "Do not run this script as root. Please run as a regular user."
     exit 1
   fi
-  if [[ -z "$SUDO_USER" ]]; then
-    log "SUDO_USER not detected. Please run using sudo from your normal user account."
+  if ! command -v sudo >/dev/null; then
+    log "sudo is required but not installed. Please install sudo and re-run."
     exit 1
   fi
-  
 }
 
 # Detect the installed desktop environment
@@ -160,7 +159,7 @@ install_packages() {
   esac
 
   log "Installing required packages for $de..."
-  echo "$SUDO_PASSWORD" | sudo -S pacman -Sy --needed --noconfirm "${base_pkgs[@]}" "${pkgs[@]}"
+  sudo pacman -Syu --needed --noconfirm "${base_pkgs[@]}" "${pkgs[@]}"
 }
 
 # Copy dotfiles to the user's home directory
@@ -168,24 +167,24 @@ copy_dotfiles() {
   local de
   de=$1
   local user_home
-  user_home=$(eval echo ~"${SUDO_USER}")
+  user_home=$HOME
 
   log "Copying dotfiles to $user_home..."
-  install -Dm644 "dotfiles/.bash_profile" "$user_home/.bash_profile"
-  chown "$SUDO_USER:$SUDO_USER" "$user_home/.bash_profile"
+  sudo install -Dm644 "dotfiles/.bash_profile" "$user_home/.bash_profile"
+  sudo chown "$USER:$USER" "$user_home/.bash_profile"
 
   if [[ "$de" == "plasma" ]]; then
-    install -Dm744 "dotfiles/.gpg-agent-kwallet" "$user_home/.gpg-agent-kwallet"
-    chown "$SUDO_USER:$SUDO_USER" "$user_home/.gpg-agent-kwallet"
+    sudo install -Dm744 "dotfiles/.gpg-agent-kwallet" "$user_home/.gpg-agent-kwallet"
+    sudo chown "$USER:$USER" "$user_home/.gpg-agent-kwallet"
   else
-    install -Dm744 "dotfiles/.gpg-agent-gnome" "$user_home/.gpg-agent-gnome"
-    chown "$SUDO_USER:$SUDO_USER" "$user_home/.gpg-agent-gnome"
+    sudo install -Dm744 "dotfiles/.gpg-agent-gnome" "$user_home/.gpg-agent-gnome"
+    sudo chown "$USER:$USER" "$user_home/.gpg-agent-gnome"
   fi
 
   local xinitrc_template="dotfiles/.xinitrc-$de"
   if [[ -f "$xinitrc_template" ]]; then
-    install -Dm644 "$xinitrc_template" "$user_home/.xinitrc"
-    chown "$SUDO_USER:$SUDO_USER" "$user_home/.xinitrc"
+    sudo install -Dm644 "$xinitrc_template" "$user_home/.xinitrc"
+    sudo chown "$USER:$USER" "$user_home/.xinitrc"
   else
     log "No .xinitrc template for $de. Please create $xinitrc_template for proper session startup."
   fi
@@ -262,7 +261,7 @@ main() {
   cat <<EOF
 
 lightXDE install complete!
-- $de will auto-start on TTY1 for $SUDO_USER
+- $de will auto-start on TTY1 for $USER
 - Auto-unlock and Polkit rules are set
 - Reboot or log out to test
 
