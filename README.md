@@ -26,8 +26,13 @@ A lightweight, display-manager-free desktop environment for minimalists, Arch Li
 cd ~
 git clone https://github.com/eserlxl/lightXDE.git
 cd lightXDE
-sudo bash install.sh
+bash install.sh
 ```
+
+> **Important:**
+> - **Do NOT run `install.sh` as root or with `sudo`.** Run it as your regular user. The script will use `sudo` internally when needed.
+> - Your user **must be in the `wheel` group** and have working `sudo` privileges. If not, see the error messages for instructions on how to add your user to the `wheel` group and configure `sudo`.
+> - If you run `sudo bash install.sh` or run as root, the script will exit with an error.
 
 - **Detects your installed DE** (Plasma, GNOME, XFCE, LXQt, LXDE, MATE, Cinnamon, Budgie, i3, or Sway).
 - If no DE is found, it **prompts you to choose one** to install.
