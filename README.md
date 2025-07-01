@@ -22,13 +22,11 @@ A lightweight, display-manager-free desktop environment for minimalists, Arch Li
 
 ## Quick Install (Arch Linux)
 ```sh
-# 1. Clone and run the installer (as root)
+# Clone and run the installer
 cd ~
 git clone https://github.com/eserlxl/lightXDE.git
 cd lightXDE
 sudo bash install.sh
-# or, if already root:
-bash install.sh
 ```
 
 - **Detects your installed DE** (Plasma, GNOME, XFCE, LXQt, LXDE, MATE, Cinnamon, Budgie, i3, or Sway).
