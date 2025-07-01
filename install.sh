@@ -217,11 +217,7 @@ configure_pam() {
 # Install Polkit rule for passwordless actions
 install_polkit_rule() {
   log "Installing Polkit rule for passwordless actions..."
-  if [[ ! -f "$POLKIT_RULE_DEST" ]]; then
-    install -Dm644 "$POLKIT_RULE_SRC" "$POLKIT_RULE_DEST"
-  else
-    log "Polkit rule already exists. Skipping."
-  fi
+  install -Dm644 "$POLKIT_RULE_SRC" "$POLKIT_RULE_DEST"
 }
 
 # Disable any installed display managers
