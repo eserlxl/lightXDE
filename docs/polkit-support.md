@@ -36,7 +36,7 @@ polkit.addRule(function(action, subject) {
       action.id.match(/^org\.freedesktop\.upower\./) ||
       action.id.match(/^org\.freedesktop\.login1\./)
     ) {
-      return polkit.Result.YES;
+      return polkit.Result.AUTH_ADMIN_KEEP;
     }
   }
 });
@@ -55,6 +55,11 @@ polkit.addRule(function(action, subject) {
 * Actions from unknown services
 
 This ensures your system remains secure even if `wheel` users run untrusted GUI apps.
+
+> **Note:** The correct polkit agent is installed automatically for your desktop environment:
+> - KDE Plasma: polkit-kde-agent
+> - LXQt: lxqt-policykit
+> - All others: polkit-gnome
 
 ---
 
