@@ -101,7 +101,6 @@ lightXDE has recently expanded to support multiple desktop environments and impr
 | Polkit integration             | Yes (secure rules for wheel group)                        |
 | PAM integration                | Yes (patches for KWallet/GNOME Keyring)                   |
 | Documentation                  | Yes (`README.md`, `docs/`)                                |
-| License                        | GPLv3                                                     |
 
 ---
 See `docs/` for technical details and customization tips.
