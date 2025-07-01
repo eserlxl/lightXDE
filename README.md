@@ -38,7 +38,7 @@ sudo bash install.sh
 - Your DE will start automatically on TTY1 after login—no need to run 'startx'.
 
 ## Optional Enhancements
-- GPG agent integration for KWallet
+- **GPG Agent Integration**: Seamlessly integrates `gpg-agent` with KWallet for secure, passwordless GPG and SSH operations.
 - Wayland fallback (coming soon)
 
 ## Feature Overview and Recent Improvements
@@ -78,6 +78,7 @@ lightXDE has recently expanded to support many desktop environments and improved
 | Auto-login/startx on TTY1      | Yes (via `.bash_profile` and `.xinitrc-*`)                        |
 | Polkit integration             | Yes (secure rules for wheel group, correct agent for each DE)     |
 | PAM integration                | Yes (patches for KWallet/GNOME Keyring)                           |
+| GPG Agent Integration          | Yes (via `~/.gpg-agent-kwallet` for Plasma)                       |
 | Documentation                  | Yes (`README.md`, `docs/`)                                        |
 
 ---
@@ -89,6 +90,7 @@ lightXDE/
 ├── README.md
 ├── install.sh
 ├── dotfiles/
+│   ├── .gpg-agent-kwallet
 │   ├── .xinitrc-plasma
 │   ├── .xinitrc-gnome
 │   ├── .xinitrc-xfce
@@ -106,6 +108,7 @@ lightXDE/
 ├── polkit/
 │   └── 49-nopasswd.rules
 ├── docs/
+│   ├── gpg-agent-kwallet.md
 │   ├── kwallet-autounlock.md
 │   ├── polkit-support.md
 │   └── startx-autologin.md
