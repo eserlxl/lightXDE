@@ -37,10 +37,6 @@ sudo bash install.sh
 - Configures Polkit for passwordless USB/power actions.
 - Your DE will start automatically on TTY1 after login—no need to run 'startx'.
 
-## Optional Enhancements
-- **GPG Agent Integration**: Seamlessly integrates `gpg-agent` with KWallet for secure, passwordless GPG and SSH operations.
-
-
 ## Feature Overview and Recent Improvements
 
 lightXDE has recently expanded to support many desktop environments and improved its installation workflow:
@@ -57,6 +53,7 @@ lightXDE has recently expanded to support many desktop environments and improved
 
 ### System Integration
 - **Polkit & PAM:** The installer configures Polkit rules for passwordless actions (for `wheel` group) and patches PAM for KWallet (Plasma) or GNOME Keyring (GNOME) auto-unlock.
+- **GPG Agent Integration**: Seamlessly integrates `gpg-agent` with KWallet for secure, passwordless GPG and SSH operations.
 - **Documentation:** See the `docs/` directory for technical details on KWallet auto-unlock, Polkit integration, and autologin setup.
 
 ### Summary Table
