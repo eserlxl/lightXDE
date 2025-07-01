@@ -5,7 +5,7 @@
  auth       required   pam_securetty.so
  auth       requisite  pam_nologin.so
 -auth       include    system-local-login
-+auth       sufficient pam_gnome_keyring.so auto_start
++auth       optional pam_gnome_keyring.so auto_start
 +auth       include    system-auth
  account    required   pam_nologin.so
 -account    include    system-local-login
