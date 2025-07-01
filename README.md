@@ -60,23 +60,23 @@ lightXDE has recently expanded to support many desktop environments and improved
 
 | Feature                        | Status/Implementation                                      |
 |--------------------------------|-----------------------------------------------------------|
-| KDE Plasma support             | Yes (auto-detect/install, KWallet, polkit-kde-agent, dotfiles)      |
-| GNOME support                  | Yes (auto-detect/install, GNOME Keyring, polkit-gnome, dotfiles)    |
-| XFCE support                   | Yes (auto-detect/install, polkit-gnome, dotfiles)                 |
-| LXQt support                   | Yes (auto-detect/install, lxqt-policykit, dotfiles)                |
-| LXDE support                   | Yes (auto-detect/install, polkit-gnome, dotfiles)                 |
-| MATE support                   | Yes (auto-detect/install, polkit-gnome, dotfiles)                 |
-| Cinnamon support               | Yes (auto-detect/install, polkit-gnome, dotfiles)                 |
-| Budgie support                 | Yes (auto-detect/install, polkit-gnome, dotfiles)                 |
-| i3 support                     | Yes (auto-detect/install, polkit-gnome, dotfiles)                 |
-| Sway support                   | Yes (auto-detect/install, polkit-gnome, dotfiles)                 |
+| KDE Plasma support             | auto-detect/install, KWallet, polkit-kde-agent, dotfiles      |
+| GNOME support                  | auto-detect/install, GNOME Keyring, polkit-gnome, dotfiles    |
+| XFCE support                   | auto-detect/install, polkit-gnome, dotfiles                 |
+| LXQt support                   | auto-detect/install, lxqt-policykit, dotfiles                |
+| LXDE support                   | auto-detect/install, polkit-gnome, dotfiles                 |
+| MATE support                   | auto-detect/install, polkit-gnome, dotfiles                 |
+| Cinnamon support               | auto-detect/install, polkit-gnome, dotfiles                 |
+| Budgie support                 | auto-detect/install, polkit-gnome, dotfiles                 |
+| i3 support                     | auto-detect/install, polkit-gnome, dotfiles                 |
+| Sway support                   | auto-detect/install, polkit-gnome, dotfiles                 |
 | No DE installed                | Prompts user, installs selected DE                                |
-| Display manager free           | Yes (disables SDDM, LightDM, GDM, LXDM)                           |
-| Auto-login/startx on TTY1      | Yes (via `.bash_profile` and `.xinitrc-*`)                        |
-| Polkit integration             | Yes (secure rules for wheel group, correct agent for each DE)     |
-| PAM integration                | Yes (patches for KWallet/GNOME Keyring)                           |
-| GPG Agent Integration          | Yes (via `~/.gpg-agent-kwallet` for Plasma or `~/.gpg-agent-gnome` for other DEs) |
-| Documentation                  | Yes (`README.md`, `docs/`)                                        |
+| Display manager free           | disables SDDM, LightDM, GDM, LXDM                           |
+| Auto-login/startx on TTY1      | via `.bash_profile` and `.xinitrc-*`                        |
+| Polkit integration             | secure rules for wheel group, correct agent for each DE     |
+| PAM integration                | patches for KWallet/GNOME Keyring                           |
+| GPG Agent Integration          | via `~/.gpg-agent-kwallet` for Plasma or `~/.gpg-agent-gnome` for other DEs |
+| Documentation                  | `README.md`, `docs/`                                        |
 
 ---
 See `docs/` for technical details and customization tips.
