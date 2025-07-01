@@ -4,7 +4,7 @@ A lightweight, display-manager-free desktop environment for minimalists, Arch Li
 
 ## Purpose & Target Users
 - **Minimal RAM/boot time**: No display manager, no bloat, just your DE.
-- **Auto-login & Keyring auto-unlock**: Seamless session start and secrets management for KDE Plasma, GNOME, and XFCE, LXQt, LXDE, MATE, Cinnamon, Budgie, i3, and Sway.
+- **Auto-login & Keyring auto-unlock**: Seamless session start and secrets management for KDE Plasma, GNOME, and XFCE, LXQt, LXDE, MATE, Cinnamon, Budgie, and i3.
 - **Full Polkit & PAM integration**: USB automount, power actions, and secure authentication.
 - **Systemd compatible**: Works on Arch Linux and derivatives.
 
@@ -34,7 +34,7 @@ bash install.sh
 > - Your user **must be in the `wheel` group** and have working `sudo` privileges. If not, see the error messages for instructions on how to add your user to the `wheel` group and configure `sudo`.
 > - If you run `sudo bash install.sh` or run as root, the script will exit with an error.
 
-- **Detects your installed DE** (Plasma, GNOME, XFCE, LXQt, LXDE, MATE, Cinnamon, Budgie, i3, or Sway).
+- **Detects your installed DE** (Plasma, GNOME, XFCE, LXQt, LXDE, MATE, Cinnamon, Budgie, or i3).
 - If no DE is found, it **prompts you to choose one** to install.
 - Installs the minimal required packages for your chosen DE, including the correct polkit agent:
   - polkit-kde-agent for KDE Plasma
@@ -50,8 +50,8 @@ bash install.sh
 lightXDE has recently expanded to support many desktop environments and improved its installation workflow:
 
 ### Multi-Desktop Environment Support
-- **Automatic Detection:** The installer detects if KDE Plasma, GNOME, XFCE, LXQt, LXDE, MATE, Cinnamon, Budgie, i3, or Sway is already installed.
-- **User Choice:** If no supported DE is found, the installer prompts you to select and install one (KDE Plasma, GNOME, XFCE, LXQt, LXDE, MATE, Cinnamon, Budgie, i3, or Sway).
+- **Automatic Detection:** The installer detects if KDE Plasma, GNOME, XFCE, LXQt, LXDE, MATE, Cinnamon, Budgie, or i3 is already installed.
+- **User Choice:** If no supported DE is found, the installer prompts you to select and install one (KDE Plasma, GNOME, XFCE, LXQt, LXDE, MATE, Cinnamon, Budgie, or i3).
 - **Minimal Install:** Only the essential packages for your chosen DE are installed, including the correct polkit agent (polkit-kde-agent for Plasma, lxqt-policykit for LXQt, polkit-gnome for all others), keeping the system lightweight.
 - **Dotfiles:** The correct `.xinitrc-<de>` and `.bash_profile` are copied for your DE, ensuring seamless auto-login and session start.
 
@@ -77,7 +77,6 @@ lightXDE has recently expanded to support many desktop environments and improved
 | Cinnamon support               | auto-detect/install, polkit-gnome, dotfiles                 |
 | Budgie support                 | auto-detect/install, polkit-gnome, dotfiles                 |
 | i3 support                     | auto-detect/install, polkit-gnome, dotfiles                 |
-| Sway support                   | auto-detect/install, polkit-gnome, dotfiles                 |
 | No DE installed                | Prompts user, installs selected DE                                |
 | Display manager free           | disables SDDM, LightDM, GDM, LXDM                           |
 | Auto-login/startx on TTY1      | via `.bash_profile` and `.xinitrc-*`                        |
@@ -106,7 +105,6 @@ lightXDE/
 │   ├── .xinitrc-cinnamon
 │   ├── .xinitrc-budgie
 │   ├── .xinitrc-i3
-│   ├── .xinitrc-sway
 │   └── .bash_profile
 ├── pam/
 │   ├── login-pam-kwallet.patch
