@@ -1,6 +1,11 @@
 #!/bin/bash
 # .xinitrc for lightXDE: start XFCE with dbus and session vars
 
+# Source GPG agent integration for GNOME Keyring
+if [[ -f ~/.gpg-agent-gnome ]]; then
+  source ~/.gpg-agent-gnome
+fi
+
 export DESKTOP_SESSION=xfce
 export XDG_CURRENT_DESKTOP=XFCE
 

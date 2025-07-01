@@ -1,10 +1,15 @@
 #!/bin/bash
 # .xinitrc for lightXDE: start MATE with dbus and session vars
 
+# Source GPG agent integration for GNOME Keyring
+if [[ -f ~/.gpg-agent-gnome ]]; then
+  source ~/.gpg-agent-gnome
+fi
+
 export DESKTOP_SESSION=mate
 export XDG_CURRENT_DESKTOP=MATE
 
 [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 [[ -f ~/.xprofile ]] && source ~/.xprofile
 
-exec mate-session 
+exec mate-session

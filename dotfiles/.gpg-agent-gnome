@@ -1,0 +1,14 @@
+#!/bin/bash
+#
+# GPG agent integration for GNOME Keyring
+#
+# This script is sourced from .xinitrc files to start the GPG agent
+# and configure it to use GNOME Keyring for password caching.
+
+# Start the GPG agent
+gpg-connect-agent /bye
+
+# Configure the GPG agent to use GNOME Keyring
+export GPG_TTY=$(tty)
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+gpg-connect-agent updatestartuptty /bye >/dev/null

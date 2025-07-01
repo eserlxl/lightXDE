@@ -53,7 +53,7 @@ lightXDE has recently expanded to support many desktop environments and improved
 
 ### System Integration
 - **Polkit & PAM:** The installer configures Polkit rules for passwordless actions (for `wheel` group) and patches PAM for KWallet (Plasma) or GNOME Keyring (GNOME) auto-unlock.
-- **GPG Agent Integration**: Seamlessly integrates `gpg-agent` with KWallet for secure, passwordless GPG and SSH operations.
+- **GPG Agent Integration**: Seamlessly integrates `gpg-agent` with KWallet (for Plasma) or GNOME Keyring (for other DEs) for secure, passwordless GPG and SSH operations.
 - **Documentation:** See the `docs/` directory for technical details on KWallet auto-unlock, Polkit integration, and autologin setup.
 
 ### Summary Table
@@ -75,7 +75,7 @@ lightXDE has recently expanded to support many desktop environments and improved
 | Auto-login/startx on TTY1      | Yes (via `.bash_profile` and `.xinitrc-*`)                        |
 | Polkit integration             | Yes (secure rules for wheel group, correct agent for each DE)     |
 | PAM integration                | Yes (patches for KWallet/GNOME Keyring)                           |
-| GPG Agent Integration          | Yes (via `~/.gpg-agent-kwallet` for Plasma)                       |
+| GPG Agent Integration          | Yes (via `~/.gpg-agent-kwallet` for Plasma or `~/.gpg-agent-gnome` for other DEs) |
 | Documentation                  | Yes (`README.md`, `docs/`)                                        |
 
 ---
@@ -87,6 +87,7 @@ lightXDE/
 ├── README.md
 ├── install.sh
 ├── dotfiles/
+│   ├── .gpg-agent-gnome
 │   ├── .gpg-agent-kwallet
 │   ├── .xinitrc-plasma
 │   ├── .xinitrc-gnome
@@ -105,7 +106,7 @@ lightXDE/
 ├── polkit/
 │   └── 49-nopasswd.rules
 ├── docs/
-│   ├── gpg-agent-kwallet.md
+│   ├── gpg-agent.md
 │   ├── kwallet-autounlock.md
 │   ├── polkit-support.md
 │   └── startx-autologin.md

@@ -176,6 +176,9 @@ copy_dotfiles() {
   if [[ "$de" == "plasma" ]]; then
     install -Dm744 "dotfiles/.gpg-agent-kwallet" "$user_home/.gpg-agent-kwallet"
     chown "$SUDO_USER:$SUDO_USER" "$user_home/.gpg-agent-kwallet"
+  else
+    install -Dm744 "dotfiles/.gpg-agent-gnome" "$user_home/.gpg-agent-gnome"
+    chown "$SUDO_USER:$SUDO_USER" "$user_home/.gpg-agent-gnome"
   fi
 
   local xinitrc_template="dotfiles/.xinitrc-$de"

@@ -1,6 +1,11 @@
 #!/bin/bash
 # .xinitrc for lightXDE: start LXQt with dbus and session vars
 
+# Source GPG agent integration for GNOME Keyring
+if [[ -f ~/.gpg-agent-gnome ]]; then
+  source ~/.gpg-agent-gnome
+fi
+
 export DESKTOP_SESSION=lxqt
 export XDG_CURRENT_DESKTOP=LXQt
 
@@ -8,4 +13,4 @@ export XDG_CURRENT_DESKTOP=LXQt
 [[ -f ~/.xprofile ]] && source ~/.xprofile
 
 # LXQt: for polkit authentication, install lxqt-policykit
-exec lxqt-session 
+exec lxqt-session
