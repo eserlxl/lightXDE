@@ -234,7 +234,7 @@ configure_pam() {
 # Install Polkit rule for passwordless actions
 install_polkit_rule() {
   log "Installing Polkit rule for passwordless actions..."
-  install -Dm644 "$POLKIT_RULE_SRC" "$POLKIT_RULE_DEST"
+  sudo install -Dm644 "$POLKIT_RULE_SRC" "$POLKIT_RULE_DEST"
 }
 
 # Disable any installed display managers
@@ -244,7 +244,7 @@ disable_display_managers() {
   for dm in "${DM_LIST[@]}"; do
     if systemctl list-unit-files | grep -q "${dm}.service"; then
       if systemctl is-enabled --quiet "${dm}.service"; then
-        systemctl disable "${dm}.service"
+        sudo systemctl disable "${dm}.service"
         disabled_dms+=("$dm")
       fi
     fi
