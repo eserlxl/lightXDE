@@ -199,8 +199,11 @@ configure_pam() {
       log "Backing up $LOGIN_FILE to $backup_file"
       sudo cp "$LOGIN_FILE" "$backup_file"
       log "[DEBUG] Backup complete, patching $LOGIN_FILE for KWallet..."
-      patch_output=$(sudo patch "$LOGIN_FILE" "$PAM_KWALLET_PATCH_FILE" 2>&1)
-      patch_status=$?
+      patch_output=""
+      patch_status=0
+      if ! patch_output=$(sudo patch "$LOGIN_FILE" "$PAM_KWALLET_PATCH_FILE" 2>&1); then
+        patch_status=$?
+      fi
       log "[DEBUG] Patch command exited with status $patch_status"
       if [ $patch_status -eq 0 ]; then
         log "PAM patched successfully."
@@ -223,8 +226,11 @@ configure_pam() {
       log "Backing up $LOGIN_FILE to $backup_file"
       sudo cp "$LOGIN_FILE" "$backup_file"
       log "[DEBUG] Backup complete, patching $LOGIN_FILE for GNOME Keyring..."
-      patch_output=$(sudo patch "$LOGIN_FILE" "$PAM_GNOME_KEYRING_PATCH_FILE" 2>&1)
-      patch_status=$?
+      patch_output=""
+      patch_status=0
+      if ! patch_output=$(sudo patch "$LOGIN_FILE" "$PAM_GNOME_KEYRING_PATCH_FILE" 2>&1); then
+        patch_status=$?
+      fi
       log "[DEBUG] Patch command exited with status $patch_status"
       if [ $patch_status -eq 0 ]; then
         log "PAM patched successfully."
