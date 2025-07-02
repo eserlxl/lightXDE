@@ -186,22 +186,29 @@ configure_pam() {
   local de
   de=$1
 
+  log "[DEBUG] Entered configure_pam with de=$de"
+
   log "Configuring PAM for $de..."
   local backup_file
   backup_file="${LOGIN_FILE}.lightxde.bak.$(date +%s)"
+  log "[DEBUG] backup_file will be $backup_file"
   if [[ "$de" == "plasma" ]]; then
+    log "[DEBUG] PAM config branch: plasma"
     if ! grep -q "pam_kwallet5.so" "$LOGIN_FILE"; then
+      log "[DEBUG] pam_kwallet5.so not found in $LOGIN_FILE, proceeding to patch"
       log "Backing up $LOGIN_FILE to $backup_file"
       sudo cp "$LOGIN_FILE" "$backup_file"
-      log "Patching $LOGIN_FILE for KWallet..."
+      log "[DEBUG] Backup complete, patching $LOGIN_FILE for KWallet..."
       patch_output=$(sudo patch "$LOGIN_FILE" "$PAM_KWALLET_PATCH_FILE" 2>&1)
-      if [ $? -eq 0 ]; then
+      patch_status=$?
+      log "[DEBUG] Patch command exited with status $patch_status"
+      if [ $patch_status -eq 0 ]; then
         log "PAM patched successfully."
       else
         log "Patching failed! Output was:\n$patch_output"
         log "Restoring original $LOGIN_FILE. Attempting manual fallback."
         sudo cp "$backup_file" "$LOGIN_FILE"
-        # Always append the required lines
+        log "[DEBUG] Backup restored. Appending pam_kwallet5.so lines manually."
         echo "auth       optional   pam_kwallet5.so" | sudo tee -a "$LOGIN_FILE" > /dev/null
         echo "session    optional   pam_kwallet5.so force_run" | sudo tee -a "$LOGIN_FILE" > /dev/null
         log "[WARN] Patch failed, pam_kwallet5.so lines were appended manually to $LOGIN_FILE. Please verify manually."
@@ -210,18 +217,22 @@ configure_pam() {
       log "PAM configuration for KWallet already exists. Skipping."
     fi
   elif [[ "$de" == "gnome" ]]; then
+    log "[DEBUG] PAM config branch: gnome"
     if ! grep -q "pam_gnome_keyring.so" "$LOGIN_FILE"; then
+      log "[DEBUG] pam_gnome_keyring.so not found in $LOGIN_FILE, proceeding to patch"
       log "Backing up $LOGIN_FILE to $backup_file"
       sudo cp "$LOGIN_FILE" "$backup_file"
-      log "Patching $LOGIN_FILE for GNOME Keyring..."
+      log "[DEBUG] Backup complete, patching $LOGIN_FILE for GNOME Keyring..."
       patch_output=$(sudo patch "$LOGIN_FILE" "$PAM_GNOME_KEYRING_PATCH_FILE" 2>&1)
-      if [ $? -eq 0 ]; then
+      patch_status=$?
+      log "[DEBUG] Patch command exited with status $patch_status"
+      if [ $patch_status -eq 0 ]; then
         log "PAM patched successfully."
       else
         log "Patching failed! Output was:\n$patch_output"
         log "Restoring original $LOGIN_FILE. Attempting manual fallback."
         sudo cp "$backup_file" "$LOGIN_FILE"
-        # Always append the required lines
+        log "[DEBUG] Backup restored. Appending pam_gnome_keyring.so lines manually."
         echo "auth       optional   pam_gnome_keyring.so auto_start" | sudo tee -a "$LOGIN_FILE" > /dev/null
         echo "session    optional   pam_gnome_keyring.so auto_start" | sudo tee -a "$LOGIN_FILE" > /dev/null
         log "[WARN] Patch failed, pam_gnome_keyring.so lines were appended manually to $LOGIN_FILE. Please verify manually."
@@ -230,6 +241,7 @@ configure_pam() {
       log "PAM configuration for GNOME Keyring already exists. Skipping."
     fi
   fi
+  log "[DEBUG] Exiting configure_pam"
 }
 
 # Install Polkit rule for passwordless actions
