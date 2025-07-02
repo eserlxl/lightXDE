@@ -194,12 +194,17 @@ configure_pam() {
       log "Backing up $LOGIN_FILE to $backup_file"
       sudo cp "$LOGIN_FILE" "$backup_file"
       log "Patching $LOGIN_FILE for KWallet..."
-      if sudo patch "$LOGIN_FILE" "$PAM_KWALLET_PATCH_FILE"; then
+      patch_output=$(sudo patch "$LOGIN_FILE" "$PAM_KWALLET_PATCH_FILE" 2>&1)
+      if [ $? -eq 0 ]; then
         log "PAM patched successfully."
       else
-        log "Patching failed! Restoring original $LOGIN_FILE."
+        log "Patching failed! Output was:\n$patch_output"
+        log "Restoring original $LOGIN_FILE. Attempting manual fallback."
         sudo cp "$backup_file" "$LOGIN_FILE"
-        exit 1
+        # Always append the required lines
+        echo "auth       optional   pam_kwallet5.so" | sudo tee -a "$LOGIN_FILE" > /dev/null
+        echo "session    optional   pam_kwallet5.so force_run" | sudo tee -a "$LOGIN_FILE" > /dev/null
+        log "[WARN] Patch failed, pam_kwallet5.so lines were appended manually to $LOGIN_FILE. Please verify manually."
       fi
     else
       log "PAM configuration for KWallet already exists. Skipping."
@@ -209,12 +214,17 @@ configure_pam() {
       log "Backing up $LOGIN_FILE to $backup_file"
       sudo cp "$LOGIN_FILE" "$backup_file"
       log "Patching $LOGIN_FILE for GNOME Keyring..."
-      if sudo patch "$LOGIN_FILE" "$PAM_GNOME_KEYRING_PATCH_FILE"; then
+      patch_output=$(sudo patch "$LOGIN_FILE" "$PAM_GNOME_KEYRING_PATCH_FILE" 2>&1)
+      if [ $? -eq 0 ]; then
         log "PAM patched successfully."
       else
-        log "Patching failed! Restoring original $LOGIN_FILE."
+        log "Patching failed! Output was:\n$patch_output"
+        log "Restoring original $LOGIN_FILE. Attempting manual fallback."
         sudo cp "$backup_file" "$LOGIN_FILE"
-        exit 1
+        # Always append the required lines
+        echo "auth       optional   pam_gnome_keyring.so auto_start" | sudo tee -a "$LOGIN_FILE" > /dev/null
+        echo "session    optional   pam_gnome_keyring.so auto_start" | sudo tee -a "$LOGIN_FILE" > /dev/null
+        log "[WARN] Patch failed, pam_gnome_keyring.so lines were appended manually to $LOGIN_FILE. Please verify manually."
       fi
     else
       log "PAM configuration for GNOME Keyring already exists. Skipping."
