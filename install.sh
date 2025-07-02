@@ -162,20 +162,20 @@ copy_dotfiles() {
 
   log "Copying dotfiles to $user_home..."
   sudo install -Dm644 "dotfiles/.bash_profile" "$user_home/.bash_profile"
-  sudo chown "$USER:$USER" "$user_home/.bash_profile"
+  sudo chown "$USER:$(id -gn "$USER")" "$user_home/.bash_profile"
 
   if [[ "$de" == "plasma" ]]; then
     sudo install -Dm744 "dotfiles/.gpg-agent-kwallet" "$user_home/.gpg-agent-kwallet"
-    sudo chown "$USER:$USER" "$user_home/.gpg-agent-kwallet"
+    sudo chown "$USER:$(id -gn "$USER")" "$user_home/.gpg-agent-kwallet"
   else
     sudo install -Dm744 "dotfiles/.gpg-agent-gnome" "$user_home/.gpg-agent-gnome"
-    sudo chown "$USER:$USER" "$user_home/.gpg-agent-gnome"
+    sudo chown "$USER:$(id -gn "$USER")" "$user_home/.gpg-agent-gnome"
   fi
 
   local xinitrc_template="dotfiles/.xinitrc-$de"
   if [[ -f "$xinitrc_template" ]]; then
     sudo install -Dm644 "$xinitrc_template" "$user_home/.xinitrc"
-    sudo chown "$USER:$USER" "$user_home/.xinitrc"
+    sudo chown "$USER:$(id -gn "$USER")" "$user_home/.xinitrc"
   else
     log "No .xinitrc template for $de. Please create $xinitrc_template for proper session startup."
   fi
