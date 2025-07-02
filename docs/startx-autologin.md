@@ -1,6 +1,6 @@
 # Autologin on TTY1 with startx
 
-lightXDE provides a display-manager-free autologin experience by:
+lightXDM provides a display-manager-free autologin experience by:
 - Logging in to TTY1 (via systemd or getty autologin)
 - Using `.bash_profile` to auto-launch `startx` only on TTY1
 

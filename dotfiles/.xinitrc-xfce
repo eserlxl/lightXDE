@@ -1,5 +1,5 @@
 #!/bin/bash
-# .xinitrc for lightXDE: start XFCE with dbus and session vars
+# .xinitrc for lightXDM: start XFCE with dbus and session vars
 
 # Source GPG agent integration for GNOME Keyring
 if [[ -f ~/.gpg-agent-gnome ]]; then

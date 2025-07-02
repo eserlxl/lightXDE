@@ -1,6 +1,6 @@
-# Contributing to lightXDE
+# Contributing to lightXDM
 
-Thank you for considering contributing to lightXDE! We welcome contributions from everyone.
+Thank you for considering contributing to lightXDM! We welcome contributions from everyone.
 
 ## How to Contribute
 

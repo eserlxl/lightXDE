@@ -1,4 +1,4 @@
-# lightXDE
+# lightXDM
 
 A lightweight, display-manager-free desktop environment for minimalists, Arch Linux users, and those who prefer `startx` over SDDM/LightDM.
 
@@ -24,8 +24,8 @@ A lightweight, display-manager-free desktop environment for minimalists, Arch Li
 ```sh
 # Clone and run the installer
 cd ~
-git clone https://github.com/eserlxl/lightXDE.git
-cd lightXDE
+git clone https://github.com/eserlxl/lightXDM.git
+cd lightXDM
 bash install.sh
 ```
 
@@ -47,7 +47,7 @@ bash install.sh
 
 ## Features
 
-lightXDE has recently expanded to support many desktop environments and improved its installation workflow:
+lightXDM has recently expanded to support many desktop environments and improved its installation workflow:
 
 ### Multi-Desktop Environment Support
 - **Automatic Detection:** The installer detects if KDE Plasma, GNOME, XFCE, LXQt, LXDE, MATE, Cinnamon, Budgie, or i3 is already installed.
@@ -90,7 +90,7 @@ See `docs/` for technical details and customization tips.
 
 ## Project Structure
 ```
-lightXDE/
+lightXDM/
 ├── README.md
 ├── install.sh
 ├── dotfiles/

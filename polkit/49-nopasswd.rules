@@ -1,4 +1,4 @@
-// /etc/polkit-1/rules.d/49-nopasswd.rules for lightXDE
+// /etc/polkit-1/rules.d/49-nopasswd.rules for lightXDM
 // Hybrid rule: allow local, active wheel users on seat0 to shutdown/reboot/suspend without password
 // Require admin authentication for UDisks2 and UPower actions
 polkit.addRule(function(action, subject) {

@@ -1,10 +1,10 @@
 # GPG Agent Integration
 
-lightXDE provides seamless integration between the GPG agent and your desktop environment's keyring, ensuring that your GPG keys are automatically available in your session. This integration allows you to use GPG for signing, encryption, and SSH authentication without repeatedly entering your passphrase.
+lightXDM provides seamless integration between the GPG agent and your desktop environment's keyring, ensuring that your GPG keys are automatically available in your session. This integration allows you to use GPG for signing, encryption, and SSH authentication without repeatedly entering your passphrase.
 
 ## How It Works
 
-lightXDE uses a dedicated script to initialize the GPG agent and configure it to use your desktop environment's keyring for secure password caching. This script is automatically sourced when you log in, ensuring that the GPG agent is started and configured correctly.
+lightXDM uses a dedicated script to initialize the GPG agent and configure it to use your desktop environment's keyring for secure password caching. This script is automatically sourced when you log in, ensuring that the GPG agent is started and configured correctly.
 
 ### For KDE Plasma
 

@@ -1,6 +1,6 @@
-# Polkit Integration for lightXDE
+# Polkit Integration for lightXDM
 
-This document explains how `lightXDE` integrates with Polkit to provide support for USB auto-mounting, power management, and session actions (like reboot, suspend, logout) without needing a display manager.
+This document explains how `lightXDM` integrates with Polkit to provide support for USB auto-mounting, power management, and session actions (like reboot, suspend, logout) without needing a display manager.
 
 ---
 
@@ -14,13 +14,13 @@ Polkit (PolicyKit) is a framework for defining and handling **authorization** fo
 
 ...these actions are controlled by `polkit` rules.
 
-In systems with no display manager (like SDDM or GDM), some polkit agents and privileges may not work unless explicitly enabled. `lightXDE` solves this by manually starting a polkit agent and installing scoped rules.
+In systems with no display manager (like SDDM or GDM), some polkit agents and privileges may not work unless explicitly enabled. `lightXDM` solves this by manually starting a polkit agent and installing scoped rules.
 
 ---
 
 ## 🔒 The Default Polkit Rule (Hybrid: Secure & Usable)
 
-By default, `lightXDE` now installs a hybrid rule at:
+By default, `lightXDM` now installs a hybrid rule at:
 
 ```
 /etc/polkit-1/rules.d/49-nopasswd.rules

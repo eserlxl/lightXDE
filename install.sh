@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# lightXDE install script for Arch Linux
+# lightXDM install script for Arch Linux
 # Installs a minimal DE, configures auto-login, KWallet, Polkit, and PAM
 set -e
 
@@ -342,7 +342,7 @@ main() {
 
   cat <<EOF
 
-lightXDE install complete!
+lightXDM install complete!
 - $de will auto-start on TTY1 for $USER
 - Auto-unlock and Polkit rules are set
 - Reboot or log out to test

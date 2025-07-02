@@ -1,6 +1,6 @@
 # KWallet Auto-Unlock via PAM
 
-lightXDE uses pam_kwallet5 to automatically unlock your KDE Wallet (KWallet) at login, even without a display manager.
+lightXDM uses pam_kwallet5 to automatically unlock your KDE Wallet (KWallet) at login, even without a display manager.
 
 ## How it works
 - The installer safely backs up `/etc/pam.d/login` before patching, and can restore the original if patching fails.

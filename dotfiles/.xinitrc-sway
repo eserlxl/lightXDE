@@ -1,5 +1,5 @@
 #!/bin/bash
-# .xinitrc for lightXDE: start Sway (Wayland) with session vars
+# .xinitrc for lightXDM: start Sway (Wayland) with session vars
 
 # Source GPG agent integration for GNOME Keyring
 if [[ -f ~/.gpg-agent-gnome ]]; then

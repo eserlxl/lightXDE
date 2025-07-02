@@ -1,5 +1,5 @@
 #!/bin/bash
-# .xinitrc for lightXDE: start KDE Plasma with dbus, session vars, and polkit agent
+# .xinitrc for lightXDM: start KDE Plasma with dbus, session vars, and polkit agent
 
 # Source GPG agent integration for KWallet
 if [[ -f ~/.gpg-agent-kwallet ]]; then
